@@ -4,14 +4,35 @@ Een Laravel 11 platform voor telefoons, accessoires, nieuws en community interac
 
 ## Features
 
+### Authenticatie & Gebruikers
 - ✅ **Login & Registratie**: Laravel Breeze authenticatie met gebruikersrollen
 - ✅ **User & Admin Rollen**: Gescheiden toegang en functionaliteit
-- ✅ **Profielen**: Publieke gebruikersprofielen met aanpasbare informatie
-- ✅ **Producten + Favorieten**: Productcatalogus met like/favorieten functionaliteit
-- ✅ **Nieuws + Comments**: Nieuwsartikelen met commentaarsysteem
+- ✅ **Password Reset**: Wachtwoordherstel functionaliteit
+- ✅ **Profielen**: Publieke gebruikersprofielen met aanpasbare informatie (foto, naam, geboortedatum)
+
+### Producten & Catalogus
+- ✅ **Productcatalogus**: Overzicht van telefoons, hoesjes en accessoires met filtering (zoeken, categorie, merk)
+- ✅ **Product Detail Pagina's**: Uitgebreide productinformatie
+- ✅ **Favorieten Systeem**: Like/favorieten functionaliteit met AJAX (geen page refresh)
+- ✅ **Dynamische Afbeeldingen**: Productafbeeldingen op basis van productnaam
+
+### Content & Interactie
+- ✅ **Homepage**: Hero sectie, categorieën/merken, populaire producten, laatste nieuws
+- ✅ **Nieuws + Comments**: Nieuwsartikelen met commentaarsysteem (voor ingelogde gebruikers)
 - ✅ **FAQ**: Categorieën met vragen en antwoorden
 - ✅ **Contactformulier + Admin Reply**: Contactformulier met e-mail antwoord functionaliteit
-- ✅ **Admin Panel**: Volledig CRUD systeem voor gebruikers, nieuws, FAQ en contactberichten
+
+### Admin Panel
+- ✅ **Dashboard**: Overzicht met statistieken
+- ✅ **Gebruikersbeheer**: Volledig CRUD systeem + admin toggle
+- ✅ **Nieuwsbeheer**: Volledig CRUD systeem
+- ✅ **FAQ Beheer**: Categorieën en vragen CRUD
+- ✅ **Contactberichten**: Lezen en beantwoorden van contactberichten
+
+### Design & UX
+- ✅ **Dark/Light Mode**: Toggle tussen donker en licht thema
+- ✅ **Responsive Design**: Volledig responsive voor mobile, tablet en desktop
+- ✅ **Moderne UI**: Tailwind CSS met premium design
 
 ## Installatie
 
