@@ -4,19 +4,19 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <h1 class="text-4xl font-bold mb-4">Veelgestelde Vragen</h1>
-    <p class="text-gray-600 mb-8">Hieronder vindt u de meest gestelde vragen. Klik op een vraag om het antwoord te zien.</p>
+    <h1 class="text-4xl font-bold mb-4 text-gray-800 dark:text-gray-200">Veelgestelde Vragen</h1>
+    <p class="text-gray-600 dark:text-gray-400 mb-8">Hieronder vindt u de meest gestelde vragen. Klik op een vraag om het antwoord te zien.</p>
 
     <div class="space-y-8" x-data="scrollReveal()">
         @foreach($categories as $category)
-            <div class="bg-white rounded-lg shadow-md p-6 scroll-reveal">
-                <h2 class="text-2xl font-semibold mb-4 text-light-blue-dark">{{ $category->name }}</h2>
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 scroll-reveal">
+                <h2 class="text-2xl font-semibold mb-4 text-light-blue-dark dark:text-light-blue">{{ $category->name }}</h2>
                 <div class="space-y-4">
                     @foreach($category->questions as $question)
-                        <div x-data="{ open: false }" class="border-b pb-4 last:border-b-0">
-                            <button @click="open = !open" class="w-full text-left flex items-center justify-between py-2 hover:text-light-blue-dark transition">
-                                <h3 class="text-lg font-semibold">{{ $question->question }}</h3>
-                                <svg class="w-5 h-5 text-gray-500 transition-transform" :class="{ 'transform rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <div x-data="{ open: false }" class="border-b border-gray-200 dark:border-gray-700 pb-4 last:border-b-0">
+                            <button @click="open = !open" class="w-full text-left flex items-center justify-between py-2 hover:text-light-blue-dark dark:hover:text-light-blue transition">
+                                <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200">{{ $question->question }}</h3>
+                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400 transition-transform" :class="{ 'transform rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                                 </svg>
                             </button>
@@ -27,7 +27,7 @@
                                  x-transition:leave="transition ease-in duration-150"
                                  x-transition:leave-start="opacity-100 transform translate-y-0"
                                  x-transition:leave-end="opacity-0 transform -translate-y-2"
-                                 class="mt-2 text-gray-700"
+                                 class="mt-2 text-gray-700 dark:text-gray-300"
                                  style="display: none;">
                                 {{ $question->answer }}
                             </div>

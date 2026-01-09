@@ -50,7 +50,7 @@
                 </div>
             </a>
         @empty
-            <p class="col-span-3 text-gray-500 text-center py-12">Geen nieuws beschikbaar.</p>
+            <p class="col-span-3 text-gray-500 dark:text-gray-400 text-center py-12">Geen nieuws beschikbaar.</p>
         @endforelse
     </div>
 

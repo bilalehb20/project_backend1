@@ -408,6 +408,17 @@
             background: radial-gradient(circle at 20% 50%, rgba(51, 153, 255, 0.15) 0%, transparent 50%);
         }
 
+        /* Profile Gradient - Same as Hero */
+        .phone-gradient {
+            background: linear-gradient(135deg, #0056FF 0%, #0044CC 100%);
+            transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .theme-dark .phone-gradient {
+            background: linear-gradient(135deg, #001A66 0%, #000D33 100%);
+        }
+
         .hero-pattern {
             background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0);
             background-size: 40px 40px;

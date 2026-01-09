@@ -4,11 +4,17 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-8">
             <div>
-                @if($product->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($product->image))
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full rounded-lg object-contain bg-gray-50 dark:bg-gray-700 p-8">
+                @php
+                    $imageUrl = $product->getProductImageUrl();
+                @endphp
+                @if($imageUrl)
+                    <img src="{{ $imageUrl }}" alt="{{ $product->name }}" class="w-full rounded-lg object-contain bg-gray-50 dark:bg-gray-700 p-8" onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="w-full h-96 bg-gray-200 dark:bg-gray-700 flex items-center justify-center rounded-lg" style="display: none;">
+                        <span class="text-gray-400 dark:text-gray-500 text-6xl">📱</span>
+                    </div>
                 @else
                     <div class="w-full h-96 bg-gray-200 dark:bg-gray-700 flex items-center justify-center rounded-lg">
                         <span class="text-gray-400 dark:text-gray-500 text-6xl">📱</span>

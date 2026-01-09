@@ -3,7 +3,7 @@
 @section('title', 'Home - PhoneShop')
 
 @section('content')
-<div class="bg-white">
+<div class="bg-white dark:bg-gray-900">
     <!-- Hero Section -->
     <div class="relative hero-gradient-bg py-20 md:py-24 lg:py-28 overflow-hidden">
         <!-- Background Pattern -->
@@ -36,11 +36,18 @@
                         <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden product-card border border-gray-200 dark:border-gray-700 relative shadow-sm hover:shadow-lg transition-shadow" style="height: 220px; min-width: 144px; display: flex; flex-direction: column;">
                             <!-- Product Image -->
                             <div class="relative h-36 sm:h-40 bg-gray-50 dark:bg-gray-700 overflow-hidden flex items-center justify-center category-image-container">
-                                @if($brand->featured_product && $brand->featured_product->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($brand->featured_product->image))
-                                    <img src="{{ asset('storage/' . $brand->featured_product->image) }}" 
+                                @php
+                                    $brandImageUrl = $brand->featured_product ? $brand->featured_product->getProductImageUrl() : null;
+                                @endphp
+                                @if($brandImageUrl)
+                                    <img src="{{ $brandImageUrl }}" 
                                          alt="{{ $brand->featured_product->name }}" 
                                          class="w-full h-full object-contain p-3 category-image"
-                                         loading="lazy">
+                                         loading="lazy"
+                                         onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700" style="display: none;">
+                                        <span class="text-sm text-gray-400 dark:text-gray-500 font-medium">{{ $brand->name }}</span>
+                                    </div>
                                 @else
                                     <div class="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700">
                                         <span class="text-sm text-gray-400 dark:text-gray-500 font-medium">{{ $brand->name }}</span>
@@ -72,11 +79,18 @@
                         <div class="bg-white dark:bg-gray-800 rounded-xl overflow-hidden product-card border border-gray-200 dark:border-gray-700 relative shadow-sm hover:shadow-lg transition-shadow" style="height: 220px; min-width: 144px; display: flex; flex-direction: column;">
                             <!-- Product Image -->
                             <div class="relative h-36 sm:h-40 bg-gray-50 dark:bg-gray-700 overflow-hidden flex items-center justify-center category-image-container">
-                                @if($category->featured_product && $category->featured_product->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($category->featured_product->image))
-                                    <img src="{{ asset('storage/' . $category->featured_product->image) }}" 
+                                @php
+                                    $categoryImageUrl = $category->featured_product ? $category->featured_product->getProductImageUrl() : null;
+                                @endphp
+                                @if($categoryImageUrl)
+                                    <img src="{{ $categoryImageUrl }}" 
                                          alt="{{ $category->featured_product->name }}" 
                                          class="w-full h-full object-contain p-3 category-image"
-                                         loading="lazy">
+                                         loading="lazy"
+                                         onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                    <div class="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700" style="display: none;">
+                                        <span class="text-sm text-gray-400 dark:text-gray-500 font-medium">{{ $category->name }}</span>
+                                    </div>
                                 @else
                                     <div class="w-full h-full flex items-center justify-center bg-gray-100 dark:bg-gray-700">
                                         <span class="text-sm text-gray-400 dark:text-gray-500 font-medium">{{ $category->name }}</span>
@@ -121,8 +135,8 @@
         <section class="mb-16">
             <div class="mb-8 text-center">
                 <h2 class="text-3xl font-bold text-gray-800 dark:text-gray-200 scroll-reveal mb-6">Populaire Producten</h2>
-                <a href="{{ route('products.index') }}" class="inline-block hero-cta-button px-8 py-4 rounded-xl font-semibold cta-button shadow-lg hover:shadow-2xl transition-all duration-300">
-                    Bekijk alle producten →
+                <a href="{{ route('products.index', ['category' => 'hoesjes']) }}" class="inline-block hero-cta-button px-8 py-4 rounded-xl font-semibold cta-button shadow-lg hover:shadow-2xl transition-all duration-300">
+                    Bekijk alle hoesjes →
                 </a>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full" x-data="scrollReveal()">
@@ -133,8 +147,11 @@
                     <a href="{{ route('products.show', $product) }}" class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden product-card flex flex-col h-full w-full scroll-reveal group">
                         <!-- Image Container -->
                         <div class="relative bg-gray-50 dark:bg-gray-700 h-[220px] flex items-center justify-center overflow-hidden w-full product-card-image-container">
-                            @if($product->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($product->image))
-                                <img src="{{ asset('storage/' . $product->image) }}" 
+                            @php
+                                $imageUrl = $product->getProductImageUrl();
+                            @endphp
+                            @if($imageUrl)
+                                <img src="{{ $imageUrl }}" 
                                      alt="{{ $product->name }}" 
                                      class="object-contain max-w-full max-h-[220px] p-4 product-card-image" 
                                      loading="lazy"
@@ -159,35 +176,16 @@
                                     </svg>
                                 </button>
                             @endauth
-                            <!-- Hover Overlay -->
-                            <div class="product-card-overlay">
-                                <div class="product-card-overlay-content">
-                                    <div class="text-white">
-                                        <p class="text-2xl font-bold mb-2">€{{ number_format($product->price, 2, ',', '.') }}</p>
-                                        <p class="text-sm mb-4 opacity-90">{{ Str::limit($product->description, 60) }}</p>
-                                        <span class="inline-block bg-white text-gray-800 px-4 py-2 rounded-lg font-semibold text-sm">
-                                            Bekijk Details →
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         
                         <!-- Content -->
                         <div class="p-5 flex flex-col flex-grow">
-                            <div class="mb-3">
-                                <h3 class="text-lg font-bold mb-1.5 text-gray-800 dark:text-gray-200 line-clamp-2 min-h-[3rem] product-card-title">{{ $product->name }}</h3>
-                                <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">{{ $product->brand->name }}</p>
+                            <div class="mb-3 flex-grow flex items-center justify-center">
+                                <p class="text-lg font-bold text-gray-800 dark:text-gray-200 text-center">{{ $product->brand->name }}</p>
                             </div>
-                            <div class="mb-3">
-                                <span class="inline-block px-3 py-1 text-xs font-semibold text-white rounded-full light-blue-bg">
-                                    {{ $product->category->name }}
-                                </span>
-                            </div>
-                            <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
-                                <span class="text-xl font-bold product-card-price text-light-blue-dark">€{{ number_format($product->price, 2, ',', '.') }}</span>
+                            <div class="flex items-center justify-center mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
                                 <span class="text-sm text-light-blue-dark font-semibold transition-colors">
-                                    Details →
+                                    Bekijk →
                                 </span>
                             </div>
                         </div>

@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
         <div class="phone-gradient p-8 text-white">
             <div class="flex items-center space-x-6">
                 @if($user->profile_photo)
@@ -16,19 +16,18 @@
                 @endif
                 <div>
                     <h1 class="text-4xl font-bold">{{ $user->name }}</h1>
-                    <p class="text-xl opacity-90">@{{ $user->username }}</p>
                     @if($user->birthday)
-                        <p class="text-sm opacity-75">Geboortedatum: {{ $user->birthday->format('d M Y') }}</p>
+                        <p class="text-sm text-white opacity-75">Geboortedatum: {{ $user->birthday->format('d M Y') }}</p>
                     @endif
                 </div>
             </div>
         </div>
 
-        <div class="p-8">
+        <div class="p-8 dark:bg-gray-800">
             @if($user->about_me)
                 <div class="mb-8">
-                    <h2 class="text-2xl font-semibold mb-4">Over Mij</h2>
-                    <p class="text-gray-700">{{ $user->about_me }}</p>
+                    <h2 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Over Mij</h2>
+                    <p class="text-gray-700 dark:text-gray-300">{{ $user->about_me }}</p>
                 </div>
             @endif
 
@@ -122,7 +121,7 @@
             <!-- Favoriete Producten (Backward Compatibility) -->
             @if($favoriteProducts->count() > 0 && (!auth()->check() || auth()->id() !== $user->id))
                 <div>
-                    <h2 class="text-2xl font-semibold mb-4">Favoriete Producten</h2>
+                    <h2 class="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-200">Favoriete Producten</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach($favoriteProducts as $product)
                             <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 product-card">

@@ -25,7 +25,13 @@ class ProductController extends Controller
 
         // Filter by category
         if ($request->has('category') && $request->category) {
-            $query->where('category_id', $request->category);
+            // Special case: if category is "hoesjes", filter by both hoesjes categories
+            if ($request->category === 'hoesjes') {
+                $hoesjesCategoryIds = Category::whereIn('name', ['Aangepaste Hoesjes', 'Manga Editie & Meer'])->pluck('id');
+                $query->whereIn('category_id', $hoesjesCategoryIds);
+            } else {
+                $query->where('category_id', $request->category);
+            }
         }
 
         $products = $query->paginate(12);

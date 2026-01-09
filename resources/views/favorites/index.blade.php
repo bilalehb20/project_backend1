@@ -17,11 +17,16 @@
                     <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden product-card group relative favorite-item">
                         <!-- Product Image -->
                         <div class="relative bg-gray-50 dark:bg-gray-700 h-48 flex items-center justify-center overflow-hidden">
-                            @if($product->image && \Illuminate\Support\Facades\Storage::disk('public')->exists($product->image))
-                                <img src="{{ asset('storage/' . $product->image) }}" 
+                            @php
+                                $imageUrl = $product->getProductImageUrl();
+                            @endphp
+                            @if($imageUrl)
+                                <img src="{{ $imageUrl }}" 
                                      alt="{{ $product->name }}" 
                                      class="product-card-image object-contain max-w-full max-h-48 p-4"
-                                     loading="lazy">
+                                     loading="lazy"
+                                     onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <span class="text-6xl" style="display: none;">📱</span>
                             @else
                                 <span class="text-6xl">📱</span>
                             @endif

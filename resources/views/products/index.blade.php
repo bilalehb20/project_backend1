@@ -3,20 +3,20 @@
 @section('title', 'Products - PhoneShop')
 
 @section('content')
-<div class="bg-gray-50 min-h-screen">
+<div class="bg-gray-50 dark:bg-gray-900 min-h-screen">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 class="text-3xl font-bold mb-6 text-gray-800">Products</h1>
+        <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">Products</h1>
 
         <!-- Filters -->
-        <div class="bg-gray-100 rounded-lg p-6 mb-8">
+        <div class="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 mb-8">
             <form method="GET" action="{{ route('products.index') }}" class="flex flex-wrap items-end gap-4">
                 <div class="flex-1 min-w-[200px]">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Search</label>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Zoek op productnaam..." class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-light-blue focus:border-transparent">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Search</label>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Zoek op productnaam..." class="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-light-blue focus:border-transparent">
                 </div>
                 <div class="flex-1 min-w-[200px]">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                    <select name="category" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-light-blue focus:border-transparent">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
+                    <select name="category" class="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-light-blue focus:border-transparent">
                         <option value="">Alle categorieën</option>
                         @foreach($categories as $category)
                             <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
@@ -24,8 +24,8 @@
                     </select>
                 </div>
                 <div class="flex-1 min-w-[200px]">
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Brand</label>
-                    <select name="brand" class="w-full px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-light-blue focus:border-transparent">
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Brand</label>
+                    <select name="brand" class="w-full px-4 py-2 rounded-md border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-light-blue focus:border-transparent">
                         <option value="">Alle merken</option>
                         @foreach($brands as $brand)
                             <option value="{{ $brand->id }}" {{ request('brand') == $brand->id ? 'selected' : '' }}>{{ $brand->name }}</option>
@@ -46,11 +46,14 @@
                 @php
                     $isLiked = auth()->check() && $product->likes()->where('user_id', auth()->id())->exists();
                 @endphp
-                <a href="{{ route('products.show', $product) }}" class="bg-white rounded-xl border border-gray-200 overflow-hidden product-card flex flex-col h-full w-full scroll-reveal group">
+                <a href="{{ route('products.show', $product) }}" class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden product-card flex flex-col h-full w-full scroll-reveal group">
                     <!-- Image Container -->
-                    <div class="relative bg-gray-50 h-[220px] flex items-center justify-center overflow-hidden w-full product-card-image-container">
-                        @if($product->image && Storage::disk('public')->exists($product->image))
-                            <img src="{{ asset('storage/' . $product->image) }}" 
+                    <div class="relative bg-gray-50 dark:bg-gray-700 h-[220px] flex items-center justify-center overflow-hidden w-full product-card-image-container">
+                        @php
+                            $imageUrl = $product->getProductImageUrl();
+                        @endphp
+                        @if($imageUrl)
+                            <img src="{{ $imageUrl }}" 
                                  alt="{{ $product->name }}" 
                                  class="object-contain max-w-full max-h-[220px] p-4 product-card-image"
                                  loading="lazy"
@@ -93,8 +96,8 @@
                     <div class="p-5 flex flex-col flex-grow">
                         <!-- Product Name and Brand -->
                         <div class="mb-3">
-                            <h3 class="text-lg font-bold text-gray-800 mb-1.5 line-clamp-2 min-h-[3rem] product-card-title">{{ $product->name }}</h3>
-                            <p class="text-sm text-gray-500 font-medium">{{ $product->brand->name }}</p>
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-gray-200 mb-1.5 line-clamp-2 min-h-[3rem] product-card-title">{{ $product->name }}</h3>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 font-medium">{{ $product->brand->name }}</p>
                         </div>
                         
                         <!-- Category Tag -->
@@ -105,10 +108,10 @@
                         </div>
                         
                         <!-- Description -->
-                        <p class="text-sm text-gray-600 mb-5 line-clamp-2 flex-grow leading-relaxed">{{ Str::limit($product->description, 70) }}</p>
+                        <p class="text-sm text-gray-600 dark:text-gray-300 mb-5 line-clamp-2 flex-grow leading-relaxed">{{ Str::limit($product->description, 70) }}</p>
                         
                         <!-- Price and CTA -->
-                        <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100">
+                        <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 dark:border-gray-700">
                             <span class="text-xl font-bold product-card-price text-light-blue-dark">€{{ number_format($product->price, 2, ',', '.') }}</span>
                             <span class="text-sm text-light-blue-dark font-semibold group-hover:text-light-blue-hover transition-colors">
                                 Details →
@@ -118,7 +121,7 @@
                 </a>
             @empty
                 <div class="col-span-full text-center py-12">
-                    <p class="text-gray-500 text-lg">Geen producten gevonden.</p>
+                    <p class="text-gray-500 dark:text-gray-400 text-lg">Geen producten gevonden.</p>
                 </div>
             @endforelse
         </div>
