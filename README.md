@@ -94,7 +94,9 @@ Na het runnen van `migrate:fresh --seed`:
 
 ## Mail Configuratie
 
-Voor development wordt Mailtrap aanbevolen. Configureer in `.env`:
+Dit project gebruikt **Mailtrap** voor e-mail verzending tijdens development. Mailtrap vangt alle e-mails op voor testing zonder dat ze naar echte inboxen worden verzonden.
+
+Configureer in `.env`:
 
 ```env
 MAIL_MAILER=smtp
