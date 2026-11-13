@@ -116,6 +116,20 @@ MAIL_FROM_NAME="PhoneShop"
 - **Database**: MySQL
 - **Authentication**: Laravel Breeze
 
+## Wat ik geleerd heb
+
+- Een volledige MVC-applicatie opbouwen met Laravel 11 (routes, controllers, models, Blade views)
+- Relaties tussen tabellen modelleren met Eloquent (users, producten, favorieten, nieuws, comments)
+- Authenticatie en autorisatie met gebruikersrollen (user vs. admin) via middleware
+- CRUD-functionaliteit bouwen voor een admin panel
+- AJAX-requests gebruiken voor een vlotte gebruikerservaring zonder page refresh
+- E-mails versturen en testen met Mailtrap
+- Een responsive interface met dark/light mode ontwerpen met Tailwind CSS
+
+## Auteur
+
+**Bilal Meziani** – student Toegepaste Informatica, Erasmushogeschool Brussel
+
 ## Licentie
 
 Dit project is ontwikkeld voor educatieve doeleinden.
